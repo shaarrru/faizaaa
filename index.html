@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Faiza</title>
     <style>
         body {
             display: flex;
@@ -70,6 +70,15 @@
             }
             to {
                 opacity: 1;
+            }
+        }
+        
+        @keyframes yellowPulse {
+            from {
+                text-shadow: 0 0 3px rgba(255, 215, 0, 0.5);
+            }
+            to {
+                text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
             }
         }
         
@@ -206,22 +215,33 @@
         
         .message-bubble {
             position: absolute;
-            background-color: rgb(241, 186, 186);
-            padding: 10px 15px;
+            background-color: rgba(241, 186, 186, 0.75);
+            padding: 8px 12px;
             border-radius: 20px;
             font-size: 14px;
             color: #3d3c3c;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             z-index: 10;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease-out;
             pointer-events: none;
-            max-width: 150px;
+            max-width: 160px;
             text-align: center;
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
             transform-origin: bottom center;
+            white-space: pre-line;
+            line-height: 1.4;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .yellow-word {
+            color: #FFD700;
+            font-weight: bold;
+            text-shadow: 0 0 3px rgba(255, 215, 0, 0.5);
+            animation: yellowPulse 1.5s infinite alternate;
         }
         
         @media screen and (max-width: 600px) {
@@ -249,9 +269,7 @@
 </head>
 
 <body>
-
     <h1 class="titulo">أنا مغرم بك فايزة</h1>
-
     <div class="flower">
         <img class="imagen" src="Flower/IMG_4925.jpg" alt="Girasoles" />
     </div>
@@ -281,18 +299,46 @@
             }
 
             const messages = [
-                "You're Jaadu!", "Jaadu!", "Hubun", "2000 Light years away!", "Innocently intimidating!",
-                "You're blessing!", "Prettiest soul!", "Miluji těbe", "You're my Yellow.", "Wall of silence!",
-                "Je t'aime", "Can i have my blessing back?", "You're my Noor!",
-                "Dooset dāram", "Sorry 😔 ", "You mean everything to me!", "RAWR",
-                "Moonlight!", "A WiSh!", "You're more than this flower!", "Simple Thing!",
-                "Bushraaaa!", "Precious!", "Where are thoes trolls?", "Never enough!",
-                "You're my Tahajjud!", "Can i have my duniya back?", "Babukhalamoni maaf kore dewnah!",
-                "Want to fight for my love.", "You're Sukoon!", "Please Babukhalamoni",
-                "One Last Effort!", "You're my poetry!", "You're my stardust!", "You're Duniya!",
-                "Pasandita soul", "Sacred space!", "iknow you don't care anymore, yet i care.",
-                "Want to make you my Rizq.", "You're my Yellow.", "I'm here to Stay!",
-                "Forever is not enough.", "It's always you.", "You're home!", "You're quite a dream!"
+                "2000 light\nyears away",
+                "You're my\nJaadu",
+                "You're my <span class='yellow-word'>YELLOW</span>",
+                "JAADUU",
+                "Hubun",
+                "Innocently\nintimidating",
+                "You're more than\nthis flower",
+                "My blessing",
+                "The prettiest\nsoul!",
+                "Miluji těbe",
+                "Wall of\nsilence!",
+                "Je t'aime",
+                "Can I have\nmy blessing?",
+                "You're my Noor",
+                "Dooset dāram",
+                "You're my <span class='yellow-word'>YELLOW</span>",
+                "I'm sorry\nfor everything",
+                "You mean\neverything",
+                "RAWR!\nI miss you",
+                "My moonlight",
+                "Beautiful\nWiSh",
+                "you're precious",
+                "My Simple Thing",
+                "You're my <span class='yellow-word'>YELLOW</span>",
+                "Bushraaaa!",
+                "So precious!",
+                "Where are\nthose trolls?",
+                "Never enough",
+                "You're my\nTahajjud!",
+                "You're my\nduniyaa!",
+                "Sorry 😔",
+                "Want to fight\nfor my love.",
+                "You're my\nSukoon",
+                "You're my <span class='yellow-word'>YELLOW</span>",
+                "HOPE!",
+                "One last\nchance",
+                "Living\npoetry",
+                "Made of\nstardust",
+                "You're home!",
+                "You're quite\na dream!"
             ];
 
             const butterflyColors = [{
@@ -372,7 +418,7 @@
 
                 if (isFirstButterfly) {
                     setTimeout(() => {
-                        messageBubble.textContent = "Babukhalamooonii find them if u can!";
+                        messageBubble.innerHTML = "Babukhalamooonii find them if u can!";
                         messageBubble.style.opacity = '1';
 
                         setTimeout(() => {
@@ -418,17 +464,11 @@
                     currentX += Math.cos(angle) * speed;
                     currentY += Math.sin(angle) * speed;
 
-                    if (currentX < -100) {
-                        currentX = window.innerWidth;
-                    } else if (currentX > window.innerWidth + 100) {
-                        currentX = -100;
-                    }
+                    if (currentX < -100) currentX = window.innerWidth;
+                    else if (currentX > window.innerWidth + 100) currentX = -100;
 
-                    if (currentY < -100) {
-                        currentY = window.innerHeight;
-                    } else if (currentY > window.innerHeight + 100) {
-                        currentY = -100;
-                    }
+                    if (currentY < -100) currentY = window.innerHeight;
+                    else if (currentY > window.innerHeight + 100) currentY = -100;
 
                     butterfly.style.left = `${currentX}px`;
                     butterfly.style.top = `${currentY}px`;
@@ -438,13 +478,8 @@
                     const newIsFlipped = Math.cos(angle) <= 0;
                     if (newIsFlipped !== isFlipped) {
                         isFlipped = newIsFlipped;
-                        if (isFlipped) {
-                            butterfly.style.transform = `rotate(${rotation}deg) scaleX(-1)`;
-                            messageBubble.style.transform = 'translateX(-50%) scaleX(-1)';
-                        } else {
-                            butterfly.style.transform = `rotate(${rotation}deg) scaleX(1)`;
-                            messageBubble.style.transform = 'translateX(-50%) scaleX(1)';
-                        }
+                        butterfly.style.transform = `rotate(${rotation}deg) scaleX(${isFlipped ? -1 : 1})`;
+                        messageBubble.style.transform = `translateX(-50%) scaleX(${isFlipped ? -1 : 1})`;
                     } else {
                         butterfly.style.transform = `rotate(${rotation}deg) scaleX(${isFlipped ? -1 : 1})`;
                     }
@@ -457,7 +492,7 @@
 
             function showRandomMessage(bubble) {
                 const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-                bubble.textContent = randomMessage;
+                bubble.innerHTML = randomMessage;
                 bubble.style.opacity = '1';
 
                 setTimeout(() => {
@@ -486,7 +521,6 @@
                 const size = 4 + Math.random() * 8;
                 firefly.style.width = `${size}px`;
                 firefly.style.height = `${size}px`;
-
                 firefly.style.opacity = '0';
 
                 const hue = 40 + Math.random() * 30;
@@ -501,11 +535,10 @@
 
             function animateFirefly(firefly) {
                 const lifespan = 8000 + Math.random() * 7000;
-
                 const baseMoveDuration = 2000 + Math.random() * 5000;
-
                 const baseGlowDuration = 200 + Math.random() * 800;
                 const maxGlowVariation = 0.4 + Math.random() * 0.4;
+                const startTime = performance.now();
 
                 firefly.animate([{
                     opacity: 0
@@ -542,7 +575,6 @@
                     };
                 }
 
-                const startTime = performance.now();
                 startGlowAnimation();
 
                 let currentX = parseFloat(firefly.style.left);
@@ -552,21 +584,15 @@
 
                 function moveFirefly() {
                     const moveDuration = baseMoveDuration * (0.7 + Math.random() * 0.6);
-
                     const angle = (Math.random() * Math.PI / 3) - Math.PI / 6;
                     const baseAngle = Math.atan2(verticalBias, horizontalBias);
                     const finalAngle = baseAngle + angle;
-
                     const distance = 50 + Math.random() * 200;
                     const newX = currentX + Math.cos(finalAngle) * distance;
                     const newY = currentY + Math.sin(finalAngle) * distance;
 
-                    if (Math.random() > 0.8) {
-                        horizontalBias *= -1;
-                    }
-                    if (Math.random() > 0.8) {
-                        verticalBias *= -1;
-                    }
+                    if (Math.random() > 0.8) horizontalBias *= -1;
+                    if (Math.random() > 0.8) verticalBias *= -1;
 
                     const moveAnim = firefly.animate([{
                         transform: 'translate(0, 0)'
@@ -582,12 +608,8 @@
                         currentX = newX;
                         currentY = newY;
 
-                        if (currentX < 0 || currentX > window.innerWidth) {
-                            horizontalBias *= -1;
-                        }
-                        if (currentY < 0 || currentY > window.innerHeight) {
-                            verticalBias *= -1;
-                        }
+                        if (currentX < 0 || currentX > window.innerWidth) horizontalBias *= -1;
+                        if (currentY < 0 || currentY > window.innerHeight) verticalBias *= -1;
 
                         if (performance.now() - startTime < lifespan) {
                             moveFirefly();
@@ -612,7 +634,6 @@
             }
         });
     </script>
-
 </body>
 
 </html>
