@@ -1,0 +1,630 @@
+<!-- 
+  This code written for someone spicial 
+  don't use it with or without permission. 
+  @shahriar 
+-->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #CA7572;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .flower {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            animation: float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .imagen {
+            margin-top: 9vh;
+            height: 53vh;
+            width: 32vh;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .titulo {
+            margin-bottom: 180px;
+            color: #F6F6EE;
+            position: absolute;
+            top: 8vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            font-size: 3vh;
+            opacity: 0;
+            animation: fadeIn 4s ease-in-out forwards;
+            text-align: center;
+            z-index: 1;
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        h1 {
+            font-size: 2em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .firefly {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #fff8a6;
+            border-radius: 50%;
+            filter: blur(1px);
+            box-shadow: 0 0 15px 5px #fff8a6;
+            opacity: 0;
+            z-index: 2;
+            pointer-events: none;
+            will-change: transform, opacity, box-shadow;
+        }
+        
+        .butterfly_wrapper {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            z-index: 3;
+            cursor: pointer;
+            pointer-events: auto;
+            will-change: transform;
+        }
+        
+        .butterfly_wrapper .leftwings,
+        .butterfly_wrapper .rightwings {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            top: 0;
+        }
+        
+        .butterfly_wrapper .leftwings {
+            left: 0;
+        }
+        
+        .butterfly_wrapper .rightwings {
+            right: 0;
+        }
+        
+        .butterfly_wrapper .perspective {
+            position: relative;
+            width: 100%;
+            height: 50%;
+            perspective: 150px;
+            perspective-origin: 50% 50%;
+        }
+        
+        .butterfly_wrapper .upperwing,
+        .butterfly_wrapper .lowerwing {
+            animation-duration: 0.3s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+        
+        .butterfly_wrapper .upperwing {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .butterfly_wrapper .upperwing_left {
+            border-top-left-radius: 10%;
+            border-top-right-radius: 80%;
+            border-bottom-right-radius: 0%;
+            border-bottom-left-radius: 30%;
+            transform-origin: 100% 50%;
+            animation-name: movewing_left;
+        }
+        
+        .butterfly_wrapper .upperwing_right {
+            border-top-left-radius: 80%;
+            border-top-right-radius: 10%;
+            border-bottom-right-radius: 30%;
+            border-bottom-left-radius: 0%;
+            transform-origin: 0% 50%;
+            animation-name: movewing_right;
+        }
+        
+        .butterfly_wrapper .lowerwing {
+            position: absolute;
+            top: 0;
+            width: 80%;
+            height: 80%;
+        }
+        
+        .butterfly_wrapper .lowerwing_left {
+            right: 0;
+            border-top-left-radius: 30%;
+            border-top-right-radius: 0%;
+            border-bottom-right-radius: 80%;
+            border-bottom-left-radius: 10%;
+            transform-origin: 100% 50%;
+            animation-name: movewing_left;
+        }
+        
+        .butterfly_wrapper .lowerwing_right {
+            left: 0;
+            border-top-left-radius: 0%;
+            border-top-right-radius: 30%;
+            border-bottom-right-radius: 10%;
+            border-bottom-left-radius: 80%;
+            transform-origin: 0% 50%;
+            animation-name: movewing_right;
+        }
+        
+        @keyframes movewing_left {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(65deg);
+            }
+        }
+        
+        @keyframes movewing_right {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(-65deg);
+            }
+        }
+        
+        .message-bubble {
+            position: absolute;
+            background-color: rgb(241, 186, 186);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #3d3c3c;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            max-width: 150px;
+            text-align: center;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            transform-origin: bottom center;
+        }
+        
+        @media screen and (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            .butterfly_wrapper {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        
+        @media screen and (min-width: 601px) and (max-width: 1024px) {
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+        
+        @media screen and (min-width: 1025px) {
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 class="titulo">أنا مغرم بك فايزة</h1>
+
+    <div class="flower">
+        <img class="imagen" src="Flower/IMG_4925.jpg" alt="Girasoles" />
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const numFireflies = 30;
+
+            for (let i = 0; i < numFireflies; i++) {
+                setTimeout(() => {
+                    createFirefly();
+                    if (i === numFireflies - 2) {
+                        setInterval(createFirefly, 1200);
+                    }
+                }, i * 150);
+            }
+
+            const butterflyCount = 10;
+            for (let i = 0; i < butterflyCount; i++) {
+                setTimeout(() => {
+                    createButterfly();
+                }, i * 1000);
+            }
+
+            const messages = [
+                "You're my Jaadu!",
+                "You're my Jaadu!",
+                "You're my Jaadu!",
+                "You're my Jaadu!",
+                "You're my Jaadu!",
+                "You're blessing!",
+                "You're the most prettiest soul!",
+                "Miluji tě",
+                "You're my Yellow.",
+                "Je t'aime",
+                "You're my Yellow.",
+                "Can have my blessing back?",
+                "Need you!",
+                "You're my Noor!",
+                "Dooset dāram",
+                "Youre my everything!",
+                "You're my Yellow.",
+                "Sorry!",
+                "You mean everything to me!",
+                "You're Jaadu!",
+                "You're Moonlight!",
+                "One last chance?",
+                "Can i have my blessing back!",
+                "I need you!",
+                "I will never let you down.",
+                "I want to fight for my love.",
+                "Please save me from ruins!",
+                "Can i have my Faiza back",
+                "Promise!",
+                "You're my sukoon!",
+                "You're my sukoon!",
+                "You're my sukoon!",
+                "You're my sukoon!",
+                "You're my Jaadu!",
+                "You're my Yellow.",
+                "You're sunshine!",
+                "You're magic.",
+                "Forever is not enough.",
+                "It's always you.",
+                "You're home.",
+                "You're quite a dream.",
+                "You're my sukoon!",
+                "You're my poetry!",
+                "You're my stardust.",
+                "My duniya ends with you.",
+                "You're my quiet peace.",
+                "I want to be with you.",
+                "I will make you my Rizq.",
+                "You're my Yellow.",
+                "You're my Yellow.",
+                "You're my Yellow.",
+                "You're my Yellow.",
+
+            ];
+
+            const butterflyColors = [{
+                name: "vibrant-orange",
+                gradient: "radial-gradient(ellipse at center, #FF4400 0%, #FFEE00 50%, #FF4400 100%)"
+            }, {
+                name: "vibrant-lavender",
+                gradient: "radial-gradient(ellipse at center, #9D4EDD 0%, #E0AAFF 50%, #9D4EDD 100%)"
+            }, {
+                name: "bold-pink",
+                gradient: "radial-gradient(ellipse at center, #FF2D75 0%, #FF8FAB 50%, #FF2D75 100%)"
+            }, {
+                name: "soft-peach",
+                gradient: "radial-gradient(ellipse at center, #FF9A8B 0%, #FFC3A0 50%, #FF9A8B 100%)"
+            }];
+
+            function createButterfly() {
+                const butterfly = document.createElement('div');
+                butterfly.className = 'butterfly_wrapper';
+
+                butterfly.innerHTML = `
+                    <div class="leftwings">
+                        <div class="perspective">
+                            <div class="upperwing upperwing_left"></div>
+                        </div>
+                        <div class="perspective">
+                            <div class="lowerwing lowerwing_left"></div>
+                        </div>
+                    </div>
+                    <div class="rightwings">
+                        <div class="perspective">
+                            <div class="upperwing upperwing_right"></div>
+                        </div>
+                        <div class="perspective">
+                            <div class="lowerwing lowerwing_right"></div>
+                        </div>
+                    </div>
+                `;
+
+                const color = butterflyColors[Math.floor(Math.random() * butterflyColors.length)];
+                const wings = butterfly.querySelectorAll('.upperwing, .lowerwing');
+                wings.forEach(wing => {
+                    wing.style.background = color.gradient;
+                });
+
+                const messageBubble = document.createElement('div');
+                messageBubble.className = 'message-bubble';
+                butterfly.appendChild(messageBubble);
+
+                const startX = Math.random() * (window.innerWidth - 100);
+                const startY = Math.random() * (window.innerHeight - 100);
+                butterfly.style.left = `${startX}px`;
+                butterfly.style.top = `${startY}px`;
+
+                const initialSize = 20 + Math.random() * 40;
+                butterfly.style.width = `${initialSize}px`;
+                butterfly.style.height = `${initialSize}px`;
+
+                body.appendChild(butterfly);
+
+                let currentX = startX;
+                let currentY = startY;
+                let angle = Math.random() * Math.PI * 2;
+                let speed = 0.5 + Math.random() * 1.5;
+                let turnSpeed = 0.05 + Math.random() * 0.1;
+                let turnFrequency = 50 + Math.random() * 100;
+                let turnCounter = 0;
+                let size = initialSize;
+                let rotation = 0;
+                let isFlipped = false;
+
+                butterfly.addEventListener('click', function() {
+                    showRandomMessage(messageBubble);
+                });
+
+                butterfly.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    showRandomMessage(messageBubble);
+                });
+
+                function animateButterfly() {
+                    turnCounter++;
+                    if (turnCounter >= turnFrequency) {
+                        angle += (Math.random() - 0.5) * Math.PI * turnSpeed;
+                        turnCounter = 0;
+                        turnFrequency = 50 + Math.random() * 100;
+                    }
+
+                    if (Math.random() > 0.95) {
+                        size += (Math.random() - 0.5) * 10;
+                        size = Math.max(20, Math.min(60, size));
+                    }
+
+                    if (Math.random() > 0.9) {
+                        rotation += (Math.random() - 0.5) * 10;
+                    }
+
+                    currentX += Math.cos(angle) * speed;
+                    currentY += Math.sin(angle) * speed;
+
+                    if (currentX < -100) {
+                        currentX = window.innerWidth;
+                    } else if (currentX > window.innerWidth + 100) {
+                        currentX = -100;
+                    }
+
+                    if (currentY < -100) {
+                        currentY = window.innerHeight;
+                    } else if (currentY > window.innerHeight + 100) {
+                        currentY = -100;
+                    }
+
+                    butterfly.style.left = `${currentX}px`;
+                    butterfly.style.top = `${currentY}px`;
+                    butterfly.style.width = `${size}px`;
+                    butterfly.style.height = `${size}px`;
+
+                    const newIsFlipped = Math.cos(angle) <= 0;
+                    if (newIsFlipped !== isFlipped) {
+                        isFlipped = newIsFlipped;
+                        if (isFlipped) {
+                            butterfly.style.transform = `rotate(${rotation}deg) scaleX(-1)`;
+                            messageBubble.style.transform = 'translateX(-50%) scaleX(-1)';
+                        } else {
+                            butterfly.style.transform = `rotate(${rotation}deg) scaleX(1)`;
+                            messageBubble.style.transform = 'translateX(-50%) scaleX(1)';
+                        }
+                    } else {
+                        butterfly.style.transform = `rotate(${rotation}deg) scaleX(${isFlipped ? -1 : 1})`;
+                    }
+
+                    requestAnimationFrame(animateButterfly);
+                }
+
+                animateButterfly();
+            }
+
+            function showRandomMessage(bubble) {
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                bubble.textContent = randomMessage;
+                bubble.style.opacity = '1';
+
+                setTimeout(() => {
+                    bubble.style.opacity = '0';
+                }, 2700);
+            }
+
+            function createFirefly() {
+                const firefly = document.createElement('div');
+                firefly.className = 'firefly';
+
+                let posX, posY;
+                if (Math.random() > 0.4) {
+                    const clusterX = window.innerWidth / 2;
+                    const clusterY = window.innerHeight / 2;
+                    posX = clusterX + (Math.random() - 0.5) * 400;
+                    posY = clusterY + (Math.random() - 0.5) * 300;
+                } else {
+                    posX = Math.random() * window.innerWidth;
+                    posY = Math.random() * window.innerHeight;
+                }
+
+                firefly.style.left = `${posX}px`;
+                firefly.style.top = `${posY}px`;
+
+                const size = 4 + Math.random() * 8;
+                firefly.style.width = `${size}px`;
+                firefly.style.height = `${size}px`;
+
+                firefly.style.opacity = '0';
+
+                const hue = 40 + Math.random() * 30;
+                const saturation = 70 + Math.random() * 30;
+                const baseColor = `hsla(${hue}, ${saturation}%, 80%, 1)`;
+                firefly.style.backgroundColor = baseColor;
+                firefly.style.boxShadow = `0 0 ${10 + Math.random() * 10}px ${3 + Math.random() * 5}px ${baseColor}`;
+
+                body.appendChild(firefly);
+                animateFirefly(firefly);
+            }
+
+            function animateFirefly(firefly) {
+                const lifespan = 8000 + Math.random() * 7000;
+
+                const baseMoveDuration = 2000 + Math.random() * 5000;
+
+                const baseGlowDuration = 200 + Math.random() * 800;
+                const maxGlowVariation = 0.4 + Math.random() * 0.4;
+
+                firefly.animate([{
+                    opacity: 0
+                }, {
+                    opacity: 0.6 + Math.random() * 0.4
+                }], {
+                    duration: 600 + Math.random() * 900,
+                    fill: 'forwards'
+                });
+
+                function startGlowAnimation() {
+                    const currentGlowDuration = baseGlowDuration * (0.7 + Math.random() * 0.6);
+                    const currentGlowVariation = maxGlowVariation * (0.5 + Math.random());
+
+                    const glowAnimation = firefly.animate([{
+                        opacity: 0.6 + Math.random() * 0.4,
+                        boxShadow: firefly.style.boxShadow
+                    }, {
+                        opacity: 0.3 + Math.random() * 0.2,
+                        boxShadow: `0 0 ${parseInt(firefly.style.boxShadow.split(' ')[2]) * (0.4 + Math.random() * 0.3)}px ${parseInt(firefly.style.boxShadow.split(' ')[4]) * (0.4 + Math.random() * 0.3)}px ${firefly.style.boxShadow.split(' ')[5]}`
+                    }, {
+                        opacity: 0.6 + Math.random() * 0.4,
+                        boxShadow: firefly.style.boxShadow
+                    }], {
+                        duration: currentGlowDuration,
+                        iterations: 1,
+                        easing: 'ease-in-out'
+                    });
+
+                    glowAnimation.onfinish = () => {
+                        if (performance.now() - startTime < lifespan) {
+                            startGlowAnimation();
+                        }
+                    };
+                }
+
+                const startTime = performance.now();
+                startGlowAnimation();
+
+                let currentX = parseFloat(firefly.style.left);
+                let currentY = parseFloat(firefly.style.top);
+                let horizontalBias = Math.random() > 0.5 ? 1 : -1;
+                let verticalBias = Math.random() > 0.5 ? 1 : -1;
+
+                function moveFirefly() {
+                    const moveDuration = baseMoveDuration * (0.7 + Math.random() * 0.6);
+
+                    const angle = (Math.random() * Math.PI / 3) - Math.PI / 6;
+                    const baseAngle = Math.atan2(verticalBias, horizontalBias);
+                    const finalAngle = baseAngle + angle;
+
+                    const distance = 50 + Math.random() * 200;
+                    const newX = currentX + Math.cos(finalAngle) * distance;
+                    const newY = currentY + Math.sin(finalAngle) * distance;
+
+                    if (Math.random() > 0.8) {
+                        horizontalBias *= -1;
+                    }
+                    if (Math.random() > 0.8) {
+                        verticalBias *= -1;
+                    }
+
+                    const moveAnim = firefly.animate([{
+                        transform: 'translate(0, 0)'
+                    }, {
+                        transform: `translate(${newX - currentX}px, ${newY - currentY}px)`
+                    }], {
+                        duration: moveDuration,
+                        easing: 'ease-in-out',
+                        fill: 'forwards'
+                    });
+
+                    moveAnim.onfinish = () => {
+                        currentX = newX;
+                        currentY = newY;
+
+                        if (currentX < 0 || currentX > window.innerWidth) {
+                            horizontalBias *= -1;
+                        }
+                        if (currentY < 0 || currentY > window.innerHeight) {
+                            verticalBias *= -1;
+                        }
+
+                        if (performance.now() - startTime < lifespan) {
+                            moveFirefly();
+                        }
+                    };
+                }
+
+                moveFirefly();
+
+                setTimeout(() => {
+                    firefly.animate([{
+                        opacity: parseFloat(firefly.style.opacity)
+                    }, {
+                        opacity: 0
+                    }], {
+                        duration: 1000 + Math.random() * 1000,
+                        fill: 'forwards'
+                    }).onfinish = () => {
+                        firefly.remove();
+                    };
+                }, lifespan);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
