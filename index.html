@@ -32,7 +32,7 @@
         }
         
         .imagen {
-            margin-top: 9vh;
+            margin-top: 16vh;
             height: 53vh;
             width: 32vh;
             position: relative;
@@ -43,7 +43,7 @@
             margin-bottom: 180px;
             color: #F6F6EE;
             position: absolute;
-            top: 8vh;
+            top: 17vh;
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
@@ -101,6 +101,7 @@
             cursor: pointer;
             pointer-events: auto;
             will-change: transform;
+            transition: opacity 1s ease-out;
         }
         
         .butterfly_wrapper .leftwings,
@@ -259,6 +260,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const body = document.body;
             const numFireflies = 30;
+            let firstButterflyCreated = false;
 
             for (let i = 0; i < numFireflies; i++) {
                 setTimeout(() => {
@@ -272,64 +274,25 @@
             const butterflyCount = 10;
             for (let i = 0; i < butterflyCount; i++) {
                 setTimeout(() => {
-                    createButterfly();
+                    const isFirstButterfly = !firstButterflyCreated;
+                    createButterfly(isFirstButterfly);
+                    firstButterflyCreated = true;
                 }, i * 1000);
             }
 
             const messages = [
-                "You're my Jaadu!",
-                "You're my Jaadu!",
-                "You're my Jaadu!",
-                "You're my Jaadu!",
-                "You're my Jaadu!",
-                "You're blessing!",
-                "You're the most prettiest soul!",
-                "Miluji tě",
-                "You're my Yellow.",
-                "Je t'aime",
-                "You're my Yellow.",
-                "Can have my blessing back?",
-                "Need you!",
-                "You're my Noor!",
-                "Dooset dāram",
-                "Youre my everything!",
-                "You're my Yellow.",
-                "Sorry!",
-                "You mean everything to me!",
-                "You're Jaadu!",
-                "You're Moonlight!",
-                "One last chance?",
-                "Can i have my blessing back!",
-                "I need you!",
-                "I will never let you down.",
-                "I want to fight for my love.",
-                "Please save me from ruins!",
-                "Can i have my Faiza back",
-                "Promise!",
-                "You're my sukoon!",
-                "You're my sukoon!",
-                "You're my sukoon!",
-                "You're my sukoon!",
-                "You're my Jaadu!",
-                "You're my Yellow.",
-                "You're sunshine!",
-                "You're magic.",
-                "Forever is not enough.",
-                "It's always you.",
-                "You're home.",
-                "You're quite a dream.",
-                "You're my sukoon!",
-                "You're my poetry!",
-                "You're my stardust.",
-                "My duniya ends with you.",
-                "You're my quiet peace.",
-                "I want to be with you.",
-                "I will make you my Rizq.",
-                "You're my Yellow.",
-                "You're my Yellow.",
-                "You're my Yellow.",
-                "You're my Yellow.",
-
+                "You're Jaadu!", "Jaadu!", "Hubun", "2000 Light years away!", "Innocently intimidating!",
+                "You're blessing!", "Prettiest soul!", "Miluji těbe", "You're my Yellow.", "Wall of silence!",
+                "Je t'aime", "Can i have my blessing back?", "You're my Noor!",
+                "Dooset dāram", "Sorry 😔 ", "You mean everything to me!", "RAWR",
+                "Moonlight!", "A WiSh!", "You're more than this flower!", "Simple Thing!",
+                "Bushraaaa!", "Precious!", "Where are thoes trolls?", "Was Never enough!",
+                "You're my Tahajjud!", "Can i have my duniya back?", "Babukhalamoni maaf kore dewnah!",
+                "Want to fight for my love.", "You're Sukoon!", "Please Babukhalamoni",
+                "One Last Effort!", "You're my poetry!", "You're my stardust!", "You're Duniya!",
+                "Pasandita soul", "Sacred space!", "iknow you don't care anymore, yet i care.",
+                "Want to make you my Rizq.", "You're my Yellow.", "I'm here to Stay!",
+                "Forever is not enough.", "It's always you.", "You're home!", "You're quite a dream!"
             ];
 
             const butterflyColors = [{
@@ -346,7 +309,7 @@
                 gradient: "radial-gradient(ellipse at center, #FF9A8B 0%, #FFC3A0 50%, #FF9A8B 100%)"
             }];
 
-            function createButterfly() {
+            function createButterfly(isFirstButterfly = false) {
                 const butterfly = document.createElement('div');
                 butterfly.className = 'butterfly_wrapper';
 
@@ -379,8 +342,13 @@
                 messageBubble.className = 'message-bubble';
                 butterfly.appendChild(messageBubble);
 
-                const startX = Math.random() * (window.innerWidth - 100);
-                const startY = Math.random() * (window.innerHeight - 100);
+                const startX = isFirstButterfly ?
+                    window.innerWidth / 2 + (Math.random() * 100 - 50) :
+                    Math.random() * (window.innerWidth - 100);
+                const startY = isFirstButterfly ?
+                    window.innerHeight / 2 + (Math.random() * 100 - 50) :
+                    Math.random() * (window.innerHeight - 100);
+
                 butterfly.style.left = `${startX}px`;
                 butterfly.style.top = `${startY}px`;
 
@@ -400,6 +368,24 @@
                 let size = initialSize;
                 let rotation = 0;
                 let isFlipped = false;
+                let shouldAnimate = true;
+
+                if (isFirstButterfly) {
+                    setTimeout(() => {
+                        messageBubble.textContent = "Babukhalamooonii find them if u can!";
+                        messageBubble.style.opacity = '1';
+
+                        setTimeout(() => {
+                            messageBubble.style.opacity = '0';
+                            butterfly.style.opacity = '0';
+
+                            setTimeout(() => {
+                                butterfly.remove();
+                                shouldAnimate = false;
+                            }, 1000);
+                        }, 3000);
+                    }, 1500);
+                }
 
                 butterfly.addEventListener('click', function() {
                     showRandomMessage(messageBubble);
@@ -411,6 +397,8 @@
                 });
 
                 function animateButterfly() {
+                    if (!shouldAnimate) return;
+
                     turnCounter++;
                     if (turnCounter >= turnFrequency) {
                         angle += (Math.random() - 0.5) * Math.PI * turnSpeed;
@@ -474,7 +462,7 @@
 
                 setTimeout(() => {
                     bubble.style.opacity = '0';
-                }, 2700);
+                }, 2600);
             }
 
             function createFirefly() {
