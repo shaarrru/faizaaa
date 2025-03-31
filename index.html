@@ -1,5 +1,5 @@
 <!-- 
-  This code written for someone spicial 
+  This code written for someone special 
   don't use it with or without permission. 
   @shahriar 
 -->
@@ -286,6 +286,7 @@
         <img class="imagen" src="Flower/IMG_4925.jpg" alt="Girasoles" />
     </div>
     <img src="https://t.bkit.co/w_67ea7579010e3.gif" style="position:absolute;width:1px;height:1px;opacity:0.01;pointer-events:none;">
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const body = document.body;
@@ -446,13 +447,26 @@
                     }, 1500);
                 }
 
-                butterfly.addEventListener('click', function() {
+                const trackButterflyClick = (event) => {
                     showRandomMessage(messageBubble);
-                });
 
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'butterfly_click', {
+                            'event_category': 'engagement',
+                            'event_label': color.name,
+                            'interaction_type': event.type,
+                            'screen_x': event.clientX,
+                            'screen_y': event.clientY,
+                            'butterfly_size': size,
+                            'message_shown': messages[Math.floor(Math.random() * messages.length)].substring(0, 20)
+                        });
+                    }
+                };
+
+                butterfly.addEventListener('click', trackButterflyClick);
                 butterfly.addEventListener('touchstart', function(e) {
                     e.preventDefault();
-                    showRandomMessage(messageBubble);
+                    trackButterflyClick(e);
                 });
 
                 function animateButterfly() {
