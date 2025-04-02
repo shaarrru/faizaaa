@@ -1,7 +1,7 @@
 <!-- 
   This code written for someone special 
-  don't use it with or without permission. 
-  @shahriar 
+  don't you dare to use it for someone else! 
+  ©Shaarrru
 -->
 <!DOCTYPE html>
 <html lang="es">
@@ -66,6 +66,42 @@
             z-index: 1;
         }
         
+        .score-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            text-align: center;
+            z-index: 100;
+        }
+        
+        .gotcha-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: #F6F6EE;
+            margin-bottom: 3px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(246, 246, 238, 0.3);
+            animation: glowPulse 2s infinite alternate;
+        }
+        
+        .score-value {
+            font-size: 20px;
+            color: #F6F6EE;
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+            text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+        }
+        
+        @keyframes glowPulse {
+            0% {
+                text-shadow: 0 0 5px rgba(246, 246, 238, 0.3);
+            }
+            100% {
+                text-shadow: 0 0 10px rgba(246, 246, 238, 0.8), 0 0 20px rgba(246, 246, 238, 0.4);
+            }
+        }
+        
         @keyframes float {
             0%,
             100% {
@@ -92,6 +128,22 @@
             to {
                 text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
             }
+        }
+        
+        @keyframes butterflyExplode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+        
+        .explosion-butterfly {
+            animation: butterflyExplode 0.8s ease-out forwards;
+            z-index: 100;
         }
         
         h1 {
@@ -285,13 +337,19 @@
     <div class="flower">
         <img class="imagen" src="Flower/IMG_4925.jpg" alt="Girasoles" />
     </div>
-    <img src="https://t.bkit.co/w_67ea9f835d5c7.gif" style="position:absolute;width:1px;height:1px;opacity:0.01;pointer-events:none;">
+    <div class="score-container">
+        <div class="gotcha-title">Butterflies Gotcha!</div>
+        <span class="score-value">0</span>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const body = document.body;
             const numFireflies = 30;
             let firstButterflyCreated = false;
+            let score = 0;
+            const scoreElement = document.querySelector('.score-value');
+            let activeButterflies = [];
 
             for (let i = 0; i < numFireflies; i++) {
                 setTimeout(() => {
@@ -312,51 +370,57 @@
             }
 
             const messages = [
-                "2000 light\nyears away",
-                "You're my\nJaadu",
+                "2000_light\nyears_away",
+                "You're my\nJaaduuuu",
                 "You're my <span class='yellow-word'>YELLOW</span>",
-                "JAADUU",
-                "Hubun",
-                "Innocently\nintimidating",
-                "You're more than\nthis flower",
-                "My blessing",
-                "The prettiest\nsoul!",
+                "JAADUUU!",
+                "Hubun!❤️",
+                "Innocently\nIntimidating",
+                "You're_more_than\nthis flower",
+                "Myblessing",
+                "Prettiest\nsoul!",
                 "Miluji těbe",
-                "Wall of\nsilence!",
-                "Je t'aime",
+                "How_can_i_break\nWall_of_silence!",
+                "Je_t'aime",
                 "You're someones Eid!",
-                "Please save me!",
-                "Can we sail one last time?",
-                "Can I have\nmy blessing?",
-                "You're my Noor",
+                "Can_we_sail\none_last_time?",
+                "Can_I_have\nmy_blessing?",
+                "You'reee\nmy_Noor",
                 "Dooset dāram",
                 "You're my <span class='yellow-word'>YELLOW</span>",
-                "I'm sorry for everything",
-                "You mean\neverything",
-                "RAWR!\nI miss you",
-                "My moonlight",
+                "I'm_sorry\nfor_everything",
+                "You_mean\neverything",
+                "RAWR!\nI_miss_you",
+                "Moonlight!",
                 "Beautiful\nWiSh",
-                "You're precious",
-                "My Simple Thing",
+                "You're_precious\nThan_anything",
+                "My_Simple_Thing",
                 "You're my <span class='yellow-word'>YELLOW</span>",
-                "So precious!",
-                "Where are\nthose trolls?",
-                "Never enough",
-                "You're my\nTahajjud!",
-                "You're my\nduniyaa!",
-                "Sorry 😔",
-                "Want to fight\nfor my love.",
-                "You're my\nSukoon",
+                "you_areee Precious!",
+                "Where_are\nthose_trolls?",
+                "Can_we_talk?",
+                "There_is_noone\nlike you!",
+                "Need_you_more\nthan_anything",
+                "You're_my\nTahajjud!",
+                "You're_my\nduniyaa!",
+                "Sorry😔",
+                "Want_to_fight\nfor_my_love.",
+                "You're_my\nSukooon",
                 "You're my <span class='yellow-word'>YELLOW</span>",
-                "HOPE!",
-                "Can we talk?",
-                "One last\nchance",
+                "You're_HOPE!",
+                "Can_we_talk?",
+                "One_last\nchance?",
+                "Life_paused without_you!",
+                "Damn_you’re\nmyblessing!",
+                "Save_me_please!",
+                "Are_u_never\ngonna_believe_me?",
+                "I'm_hell\nobsessed with_you!",
                 "Living\npoetry",
-                "You're stardust",
-                "You're all over\nmy prayers",
-                "Keep you Soul safe!",
-                "You're home!",
-                "You're quite\na dream!"
+                "You're\nStardust",
+                "You're_all_over\nmy prayers",
+                "Keep you\nSoul safe!",
+                "You're_home!",
+                "You're_quite\na dream!"
             ];
 
             const butterflyColors = [{
@@ -372,6 +436,121 @@
                 name: "soft-peach",
                 gradient: "radial-gradient(ellipse at center, #FF9A8B 0%, #FFC3A0 50%, #FF9A8B 100%)"
             }];
+
+            document.addEventListener('keydown', function(event) {
+                if (event.code === 'Space' || event.code === 'Enter') {
+                    if (activeButterflies.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * activeButterflies.length);
+                        const butterfly = activeButterflies[randomIndex];
+
+                        const clickEvent = new MouseEvent('click', {
+                            view: window,
+                            bubbles: true,
+                            cancelable: true
+                        });
+                        butterfly.dispatchEvent(clickEvent);
+                    }
+                }
+            });
+
+            function updateScore(points = 1) {
+                score += points;
+                scoreElement.textContent = score;
+
+                const gotchaTitle = document.querySelector('.gotcha-title');
+                gotchaTitle.style.transform = 'scale(1.2)';
+                gotchaTitle.style.color = '#FF6347';
+                setTimeout(() => {
+                    gotchaTitle.style.transform = 'scale(1)';
+                    gotchaTitle.style.color = '#FFD700';
+                }, 300);
+
+                scoreElement.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    scoreElement.style.transform = 'scale(1)';
+                }, 200);
+
+                if (score % 10 === 0) {
+                    createButterflyExplosion();
+                }
+            }
+
+            function createButterflyExplosion() {
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const explosionButterfly = document.createElement('div');
+                        explosionButterfly.className = 'butterfly_wrapper explosion-butterfly';
+
+                        explosionButterfly.innerHTML = `
+                            <div class="leftwings">
+                                <div class="perspective">
+                                    <div class="upperwing upperwing_left"></div>
+                                </div>
+                                <div class="perspective">
+                                    <div class="lowerwing lowerwing_left"></div>
+                                </div>
+                            </div>
+                            <div class="rightwings">
+                                <div class="perspective">
+                                    <div class="upperwing upperwing_right"></div>
+                                </div>
+                                <div class="perspective">
+                                    <div class="lowerwing lowerwing_right"></div>
+                                </div>
+                            </div>
+                        `;
+
+                        const posX = Math.random() * window.innerWidth;
+                        const posY = Math.random() * window.innerHeight;
+
+                        explosionButterfly.style.left = `${posX}px`;
+                        explosionButterfly.style.top = `${posY}px`;
+                        explosionButterfly.style.width = '40px';
+                        explosionButterfly.style.height = '40px';
+
+                        const color = butterflyColors[Math.floor(Math.random() * butterflyColors.length)];
+                        const wings = explosionButterfly.querySelectorAll('.upperwing, .lowerwing');
+                        wings.forEach(wing => {
+                            wing.style.background = color.gradient;
+                        });
+
+                        document.body.appendChild(explosionButterfly);
+
+                        setTimeout(() => {
+                            explosionButterfly.remove();
+                        }, 800);
+
+                    }, i * 20);
+                }
+
+                activeButterflies.forEach(butterfly => {
+                    butterfly.animate([{
+                        transform: 'rotate(0deg) scale(1)',
+                        opacity: 1
+                    }, {
+                        transform: 'rotate(360deg) scale(0)',
+                        opacity: 0
+                    }], {
+                        duration: 600,
+                        easing: 'ease-in',
+                        fill: 'forwards'
+                    });
+
+                    setTimeout(() => {
+                        butterfly.remove();
+                    }, 600);
+                });
+
+                activeButterflies = [];
+
+                setTimeout(() => {
+                    for (let i = 0; i < 10; i++) {
+                        setTimeout(() => {
+                            createButterfly();
+                        }, i * 300);
+                    }
+                }, 1000);
+            }
 
             function createButterfly(isFirstButterfly = false) {
                 const butterfly = document.createElement('div');
@@ -421,6 +600,7 @@
                 butterfly.style.height = `${initialSize}px`;
 
                 body.appendChild(butterfly);
+                activeButterflies.push(butterfly);
 
                 let currentX = startX;
                 let currentY = startY;
@@ -436,7 +616,13 @@
 
                 if (isFirstButterfly) {
                     setTimeout(() => {
-                        messageBubble.innerHTML = "Babukhalamonii Tap! Tap! Tap!";
+                        const firstMessages = [
+                            "Babukhalamonii Tap! Tap! Tap!",
+                            "Babukhalamoooniii find words if u can!"
+                        ];
+
+                        const randomFirstMessage = firstMessages[Math.floor(Math.random() * firstMessages.length)];
+                        messageBubble.innerHTML = randomFirstMessage;
                         messageBubble.style.opacity = '1';
 
                         setTimeout(() => {
@@ -446,6 +632,7 @@
                             setTimeout(() => {
                                 butterfly.remove();
                                 shouldAnimate = false;
+                                activeButterflies = activeButterflies.filter(b => b !== butterfly);
                             }, 1000);
                         }, 3000);
                     }, 1500);
@@ -453,6 +640,12 @@
 
                 const trackButterflyClick = (event) => {
                     showRandomMessage(messageBubble);
+                    updateScore();
+
+                    butterfly.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        butterfly.style.transform = '';
+                    }, 200);
 
                     if (typeof gtag !== 'undefined') {
                         gtag('event', 'butterfly_click', {
