@@ -32,6 +32,10 @@
             flex-direction: column;
             overflow: hidden;
             position: relative;
+            transition: background 3s ease;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
         }
         
         .flower {
@@ -72,6 +76,10 @@
             right: 20px;
             text-align: center;
             z-index: 100;
+<<<<<<< HEAD
+=======
+            transition: opacity 1s ease;
+>>>>>>> abe33f7 (Last)
         }
         
         .gotcha-title {
@@ -92,6 +100,56 @@
             margin-top: 5px;
             text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
         }
+<<<<<<< HEAD
+=======
+        /* Final State */
+        
+        #final-state {
+            position: fixed;
+            background-color: #EDE5E2;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 3s ease;
+        }
+        
+        #final-state.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .final-title {
+            color: #CA7572;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: gentlePulse 4s ease-in-out infinite;
+        }
+        
+        .final-flower {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .final-image {
+            height: 300vh;
+            width: auto;
+            max-width: 90%;
+            object-fit: contain;
+        }
+        /* Animations */
+>>>>>>> abe33f7 (Last)
         
         @keyframes glowPulse {
             0% {
@@ -128,6 +186,7 @@
             to {
                 text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
             }
+<<<<<<< HEAD
         }
         
         @keyframes butterflyExplode {
@@ -150,7 +209,43 @@
             font-size: 2em;
             line-height: 1.5;
             margin-bottom: 20px;
+=======
+>>>>>>> abe33f7 (Last)
         }
+        
+        @keyframes butterflyExplode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes gentlePulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.9;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes softFloat {
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg);
+            }
+            50% {
+                transform: translateY(-25px) rotate(2deg);
+            }
+        }
+        /* Butterfly styles */
         
         .firefly {
             position: absolute;
@@ -316,6 +411,12 @@
                 width: 100px;
                 height: 100px;
             }
+            .final-title {
+                font-size: 2.5rem;
+            }
+            .final-image {
+                height: 40vh;
+            }
         }
         
         @media screen and (min-width: 601px) and (max-width: 1024px) {
@@ -341,6 +442,17 @@
         <div class="gotcha-title">Butterflies Gotcha!</div>
         <span class="score-value">0</span>
     </div>
+<<<<<<< HEAD
+=======
+
+    <!-- Final State (hidden initially) -->
+    <div id="final-state">
+        <h1 class="final-title">آسف</h1>
+        <div class="final-flower">
+            <img class="final-image" src="Flower/IMG_4978.jpeg" alt="Our Love" />
+        </div>
+    </div>
+>>>>>>> abe33f7 (Last)
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -350,24 +462,14 @@
             let score = 0;
             const scoreElement = document.querySelector('.score-value');
             let activeButterflies = [];
+<<<<<<< HEAD
+=======
+            let animationFrameCount = 0;
+>>>>>>> abe33f7 (Last)
 
-            for (let i = 0; i < numFireflies; i++) {
-                setTimeout(() => {
-                    createFirefly();
-                    if (i === numFireflies - 2) {
-                        setInterval(createFirefly, 1200);
-                    }
-                }, i * 150);
-            }
+            document.getElementById('final-state').classList.add('hidden');
 
-            const butterflyCount = 10;
-            for (let i = 0; i < butterflyCount; i++) {
-                setTimeout(() => {
-                    const isFirstButterfly = !firstButterflyCreated;
-                    createButterfly(isFirstButterfly);
-                    firstButterflyCreated = true;
-                }, i * 1000);
-            }
+            createInitialElements();
 
             const messages = [
                 "2000_light\nyears_away",
@@ -414,7 +516,11 @@
                 "Can_we_talk?",
                 "One_last\nchance?",
                 "Life_paused without_you!",
+<<<<<<< HEAD
                 "Damn_you’re\nmyblessing!",
+=======
+                "Damn_you're\nmyblessing!",
+>>>>>>> abe33f7 (Last)
                 "Save_me_please!",
                 "Are_u_never\ngonna_believe_me?",
                 "I'm_hell\nobsessed with_you!",
@@ -440,6 +546,46 @@
                 gradient: "radial-gradient(ellipse at center, #FF9A8B 0%, #FFC3A0 50%, #FF9A8B 100%)"
             }];
 
+<<<<<<< HEAD
+=======
+            function createInitialElements() {
+                for (let i = 0; i < numFireflies; i++) {
+                    setTimeout(() => {
+                        createFirefly();
+                        if (i === numFireflies - 2) {
+                            setInterval(createFirefly, 1200);
+                        }
+                    }, i * 150);
+                }
+
+                const butterflyCount = 10;
+                for (let i = 0; i < butterflyCount; i++) {
+                    setTimeout(() => {
+                        const isFirstButterfly = !firstButterflyCreated;
+                        createButterfly(isFirstButterfly);
+                        firstButterflyCreated = true;
+                    }, i * 1000);
+                }
+            }
+
+            function createFinalElements() {
+                for (let i = 0; i < numFireflies; i++) {
+                    setTimeout(() => {
+                        createFirefly(true);
+                        if (i === numFireflies - 2) {
+                            setInterval(() => createFirefly(true), 1200);
+                        }
+                    }, i * 150);
+                }
+
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        createButterfly(false, true);
+                    }, i * 1000);
+                }
+            }
+
+>>>>>>> abe33f7 (Last)
             document.addEventListener('keydown', function(event) {
                 if (event.code === 'Space' || event.code === 'Enter') {
                     if (activeButterflies.length > 0) {
@@ -476,6 +622,33 @@
                 if (score % 10 === 0) {
                     createButterflyExplosion();
                 }
+<<<<<<< HEAD
+=======
+
+                if (score === 50) {
+                    activateFinalState();
+                }
+            }
+
+            function activateFinalState() {
+                document.querySelectorAll('.score-container, .flower, .titulo')
+                    .forEach(el => el.remove());
+
+                document.body.style.background = '#EDE5E2';
+
+                const finalState = document.getElementById('final-state');
+                finalState.classList.remove('hidden');
+                setTimeout(() => {
+                    finalState.classList.add('visible');
+
+                    createFinalElements();
+                }, 100);
+
+                document.querySelectorAll('.butterfly_wrapper').forEach(el => {
+                    el.onclick = null;
+                    el.ontouchstart = null;
+                });
+>>>>>>> abe33f7 (Last)
             }
 
             function createButterflyExplosion() {
@@ -555,7 +728,11 @@
                 }, 1000);
             }
 
+<<<<<<< HEAD
             function createButterfly(isFirstButterfly = false) {
+=======
+            function createButterfly(isFirstButterfly = false, isFinalState = false) {
+>>>>>>> abe33f7 (Last)
                 const butterfly = document.createElement('div');
                 butterfly.className = 'butterfly_wrapper';
 
@@ -602,8 +779,18 @@
                 butterfly.style.width = `${initialSize}px`;
                 butterfly.style.height = `${initialSize}px`;
 
+<<<<<<< HEAD
                 body.appendChild(butterfly);
                 activeButterflies.push(butterfly);
+=======
+                if (isFinalState) {
+                    butterfly.style.pointerEvents = 'none';
+                    butterfly.style.cursor = 'default';
+                } else {
+                    body.appendChild(butterfly);
+                    activeButterflies.push(butterfly);
+                }
+>>>>>>> abe33f7 (Last)
 
                 let currentX = startX;
                 let currentY = startY;
@@ -641,6 +828,7 @@
                     }, 1500);
                 }
 
+<<<<<<< HEAD
                 const trackButterflyClick = (event) => {
                     showRandomMessage(messageBubble);
                     updateScore();
@@ -668,9 +856,47 @@
                     e.preventDefault();
                     trackButterflyClick(e);
                 });
+=======
+                if (!isFinalState) {
+                    const trackButterflyClick = (event) => {
+                        showRandomMessage(messageBubble);
+                        updateScore();
+
+                        butterfly.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            butterfly.style.transform = '';
+                        }, 200);
+
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'butterfly_click', {
+                                'event_category': 'engagement',
+                                'event_label': color.name,
+                                'interaction_type': event.type,
+                                'screen_x': event.clientX,
+                                'screen_y': event.clientY,
+                                'butterfly_size': size,
+                                'message_shown': messages[Math.floor(Math.random() * messages.length)].substring(0, 20)
+                            });
+                        }
+                    };
+
+                    butterfly.addEventListener('click', trackButterflyClick);
+                    butterfly.addEventListener('touchstart', function(e) {
+                        e.preventDefault();
+                        trackButterflyClick(e);
+                    });
+                }
+>>>>>>> abe33f7 (Last)
 
                 function animateButterfly() {
                     if (!shouldAnimate) return;
+
+                    if ('ontouchstart' in window && animationFrameCount % 2 === 0) {
+                        requestAnimationFrame(animateButterfly);
+                        animationFrameCount++;
+                        return;
+                    }
+                    animationFrameCount++;
 
                     turnCounter++;
                     if (turnCounter >= turnFrequency) {
@@ -727,7 +953,7 @@
                 }, 2600);
             }
 
-            function createFirefly() {
+            function createFirefly(isFinalState = false) {
                 const firefly = document.createElement('div');
                 firefly.className = 'firefly';
 
@@ -750,8 +976,15 @@
                 firefly.style.height = `${size}px`;
                 firefly.style.opacity = '0';
 
-                const hue = 40 + Math.random() * 30;
-                const saturation = 70 + Math.random() * 30;
+                let hue, saturation;
+                if (isFinalState) {
+                    hue = 10 + Math.random() * 20;
+                    saturation = 60 + Math.random() * 30;
+                } else {
+                    hue = 40 + Math.random() * 30;
+                    saturation = 70 + Math.random() * 30;
+                }
+
                 const baseColor = `hsla(${hue}, ${saturation}%, 80%, 1)`;
                 firefly.style.backgroundColor = baseColor;
                 firefly.style.boxShadow = `0 0 ${10 + Math.random() * 10}px ${3 + Math.random() * 5}px ${baseColor}`;
