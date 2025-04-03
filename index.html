@@ -1,6 +1,6 @@
 <!-- 
   This code written for someone special 
-  don't you dare to use it for someone else! 
+  Don't you dare to use it for someone else! 
   ©Shaarrru
 -->
 <!DOCTYPE html>
@@ -343,26 +343,64 @@
         
         .message-bubble {
             position: absolute;
-            background-color: rgba(241, 186, 186, 0.75);
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            color: #3d3c3c;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            z-index: 10;
-            opacity: 0;
-            transition: opacity 0.3s ease-out;
-            pointer-events: none;
-            max-width: 160px;
-            text-align: center;
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
             transform-origin: bottom center;
-            white-space: pre-line;
+            font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+            font-weight: 500;
+            font-size: 13px;
+            letter-spacing: -0.01em;
             line-height: 1.4;
+            color: #3d3c3c;
+            text-align: center;
+            white-space: pre-line;
+            background-color: rgba(241, 186, 186, 0.75);
             backdrop-filter: blur(2px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            width: max-content;
+            max-width: 200px;
+            min-width: min-content;
+            padding: 6px 10px;
+            margin-bottom: 6px;
+            display: inline-block;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            pointer-events: none;
+            z-index: 10;
+            overflow-wrap: normal;
+            word-break: keep-all;
+            box-sizing: border-box;
+        }
+        
+        .message-bubble.mono {
+            font-family: 'SF Mono', Menlo, monospace;
+            font-size: 12px;
+            letter-spacing: 0;
+            font-weight: normal;
+        }
+        
+        @keyframes bubble-float {
+            0% {
+                transform: translateX(-50%) translateY(5px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .message-bubble.show {
+            animation: bubble-float 0.3s ease-out forwards;
+        }
+        
+        .message-bubble.multiline {
+            white-space: pre-line;
+            width: max-content;
+            max-width: 200px;
         }
         
         .yellow-word {
@@ -434,60 +472,69 @@
             createInitialElements();
 
             const messages = [
-                "2000_light\nyears_away",
+                "12000 light\nyears away",
                 "You're my\nJaaduuuu",
-                "You're_My <span class='yellow-word'>YELLOW</span>",
-                "JAADUUU!",
-                "Hubun!",
+                "You're my\n<span class='yellow-word'>YELLOW</span>",
+                "You're my\n<span class='yellow-word'>YELLOW</span>",
+                "You're my\n<span class='yellow-word'>YELLOW</span>",
+                "You're my\n<span class='yellow-word'>YELLOW</span>",
+                "JAADUU✨",
+                "Eijee ektuu\nkotha bolben?",
+                "Hubun!❤️",
                 "Innocently\nIntimidating",
-                "You're_more_than\nthis flower",
-                "Myblessing",
+                "You're more than\n all these flower!",
+                "You're blessing!",
                 "Prettiest\nsoul!",
                 "Miluji těbe",
-                "Can_ibreak_those\nWall_of_silence!",
-                "Je_t'aime",
-                "You're someones Eid!",
-                "Can_we_sail\none_last_time?",
-                "Can_I_have\nmy_blessing?",
-                "You'reee\nmy_Noor",
+                "Je t'aime",
+                "Te amo",
+                "À toi pour\ntoujours!",
+                "You're\nMy Eid!",
                 "Dooset dāram",
-                "You're_My <span class='yellow-word'>YELLOW</span>",
-                "I'm_sorry\nfor_everything",
-                "You_mean\neverything",
-                "RAWR!\nI_miss_you",
                 "Moonlight!",
-                "Beautiful\nWiSh",
-                "You're_precious\nThan_anything",
-                "My_Simple_Thing",
-                "You're_My <span class='yellow-word'>YELLOW</span>",
-                "you_areeso Precious!",
-                "Remember me!",
-                "you're_my\nBarakah!",
-                "Bushraaaaa!",
-                "Where_are\nthose_trolls?",
-                "I'm_not_giving\nup_on_youuuu!",
-                "There_is_noone\nlike you!",
-                "Need_you_more\nthan_anything",
-                "You're_my\nTahajjud!",
-                "You're_my\nduniyaa!",
                 "Sorry😔",
-                "Want_to_fight\nfor_my_love.",
-                "You're_my\nSukooon",
-                "You're_My <span class='yellow-word'>YELLOW</span>",
-                "You're_HOPE!",
-                "Can_we_talk?",
-                "One_last\nchance?",
-                "Life_paused without_you!",
-                "Damn_you're\nmyblessing!",
-                "Save_me_please!",
-                "Are_u_never\ngonna_believe_me?",
-                "I'm_hell\nobsessed with_you!",
-                "Living\npoetry",
+                "RAWRR!\nI miss you",
+                "You're\nHOPE!",
+                "You're\nPoetry",
+                "You're\nHome!",
                 "You're\nStardust",
-                "You're_all_over\nmy prayers",
-                "Keep you\nSoul safe!",
-                "You're_home!",
-                "You're_quite\na dream!"
+                "You're my\nSukooon!",
+                "You're quite\nA dream!",
+                "Keep your\nSoul safe!",
+                "I'm hell\nObsessed\nwith you!",
+                "Are you never\ngonna love me?",
+                "Save Me\nplease!",
+                "You're my\nBarakah!",
+                "You're my\nBarakah!",
+                "You're my\nDuniyaa!",
+                "You're my\nDuniyaa!",
+                "There is no one\nlike Bushraa!",
+                "You're so\nPrecious!",
+                "maaf koree\ndewnah Bhai!",
+                "You're my\nSimple Thing",
+                "Can I have\nmy blessing?",
+                "Can you break\nWall of silence?",
+                "Faizaaaaaa!\ni Need you!",
+                "I'm sorry\nfor everything!",
+                "You mean\nEverything!",
+                "Remember?\nthose verses?",
+                "Where are\nthose trolls?",
+                "Can we talk?",
+                "One last\nChance?",
+                "Damn you're\nmy Nooor!",
+                "Want to fight\nfor my soul",
+                "Me paused\nwithout you!",
+                "I'm not giving\nup on youuuu!",
+                "Need you more\nthan anything",
+                "You're precious\nThan anything",
+                "You're my\nAudacity!",
+                "You're my\nAudacity!",
+                "You're my\nAudacity!",
+                "Can we sail\none last time?",
+                "You're my\nTahajjud!",
+                "You're my\nTahajjud!",
+                "You're my\nTahajjud!",
+                "You're all over\nmy prayers!"
             ];
 
             const butterflyColors = [{
@@ -750,8 +797,8 @@
                 if (isFirstButterfly) {
                     setTimeout(() => {
                         const firstMessages = [
-                            "Babukhalamonii Tap! Tap! Tap!",
-                            "Babukhalamoooniii find words if u can!"
+                            "Babukhalamonii\nTap! Tap! Tap!",
+                            "Babukhalamoooniii\nFind words if u can!"
                         ];
 
                         const randomFirstMessage = firstMessages[Math.floor(Math.random() * firstMessages.length)];
@@ -860,6 +907,8 @@
                 const randomMessage = messages[Math.floor(Math.random() * messages.length)];
                 bubble.innerHTML = randomMessage;
                 bubble.style.opacity = '1';
+
+
 
                 setTimeout(() => {
                     bubble.style.opacity = '0';
