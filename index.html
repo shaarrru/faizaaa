@@ -76,10 +76,7 @@
             right: 20px;
             text-align: center;
             z-index: 100;
-<<<<<<< HEAD
-=======
             transition: opacity 1s ease;
->>>>>>> abe33f7 (Last)
         }
         
         .gotcha-title {
@@ -100,8 +97,6 @@
             margin-top: 5px;
             text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
         }
-<<<<<<< HEAD
-=======
         /* Final State */
         
         #final-state {
@@ -149,7 +144,6 @@
             object-fit: contain;
         }
         /* Animations */
->>>>>>> abe33f7 (Last)
         
         @keyframes glowPulse {
             0% {
@@ -186,31 +180,6 @@
             to {
                 text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
             }
-<<<<<<< HEAD
-        }
-        
-        @keyframes butterflyExplode {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(3);
-                opacity: 0;
-            }
-        }
-        
-        .explosion-butterfly {
-            animation: butterflyExplode 0.8s ease-out forwards;
-            z-index: 100;
-        }
-        
-        h1 {
-            font-size: 2em;
-            line-height: 1.5;
-            margin-bottom: 20px;
-=======
->>>>>>> abe33f7 (Last)
         }
         
         @keyframes butterflyExplode {
@@ -442,8 +411,6 @@
         <div class="gotcha-title">Butterflies Gotcha!</div>
         <span class="score-value">0</span>
     </div>
-<<<<<<< HEAD
-=======
 
     <!-- Final State (hidden initially) -->
     <div id="final-state">
@@ -452,7 +419,6 @@
             <img class="final-image" src="Flower/IMG_4978.jpeg" alt="Our Love" />
         </div>
     </div>
->>>>>>> abe33f7 (Last)
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -462,10 +428,7 @@
             let score = 0;
             const scoreElement = document.querySelector('.score-value');
             let activeButterflies = [];
-<<<<<<< HEAD
-=======
             let animationFrameCount = 0;
->>>>>>> abe33f7 (Last)
 
             document.getElementById('final-state').classList.add('hidden');
 
@@ -516,11 +479,7 @@
                 "Can_we_talk?",
                 "One_last\nchance?",
                 "Life_paused without_you!",
-<<<<<<< HEAD
-                "Damn_you’re\nmyblessing!",
-=======
                 "Damn_you're\nmyblessing!",
->>>>>>> abe33f7 (Last)
                 "Save_me_please!",
                 "Are_u_never\ngonna_believe_me?",
                 "I'm_hell\nobsessed with_you!",
@@ -546,8 +505,6 @@
                 gradient: "radial-gradient(ellipse at center, #FF9A8B 0%, #FFC3A0 50%, #FF9A8B 100%)"
             }];
 
-<<<<<<< HEAD
-=======
             function createInitialElements() {
                 for (let i = 0; i < numFireflies; i++) {
                     setTimeout(() => {
@@ -585,7 +542,6 @@
                 }
             }
 
->>>>>>> abe33f7 (Last)
             document.addEventListener('keydown', function(event) {
                 if (event.code === 'Space' || event.code === 'Enter') {
                     if (activeButterflies.length > 0) {
@@ -622,8 +578,6 @@
                 if (score % 10 === 0) {
                     createButterflyExplosion();
                 }
-<<<<<<< HEAD
-=======
 
                 if (score === 50) {
                     activateFinalState();
@@ -648,7 +602,6 @@
                     el.onclick = null;
                     el.ontouchstart = null;
                 });
->>>>>>> abe33f7 (Last)
             }
 
             function createButterflyExplosion() {
@@ -728,11 +681,7 @@
                 }, 1000);
             }
 
-<<<<<<< HEAD
-            function createButterfly(isFirstButterfly = false) {
-=======
             function createButterfly(isFirstButterfly = false, isFinalState = false) {
->>>>>>> abe33f7 (Last)
                 const butterfly = document.createElement('div');
                 butterfly.className = 'butterfly_wrapper';
 
@@ -779,10 +728,6 @@
                 butterfly.style.width = `${initialSize}px`;
                 butterfly.style.height = `${initialSize}px`;
 
-<<<<<<< HEAD
-                body.appendChild(butterfly);
-                activeButterflies.push(butterfly);
-=======
                 if (isFinalState) {
                     butterfly.style.pointerEvents = 'none';
                     butterfly.style.cursor = 'default';
@@ -790,7 +735,6 @@
                     body.appendChild(butterfly);
                     activeButterflies.push(butterfly);
                 }
->>>>>>> abe33f7 (Last)
 
                 let currentX = startX;
                 let currentY = startY;
@@ -828,35 +772,6 @@
                     }, 1500);
                 }
 
-<<<<<<< HEAD
-                const trackButterflyClick = (event) => {
-                    showRandomMessage(messageBubble);
-                    updateScore();
-
-                    butterfly.style.transform = 'scale(0.9)';
-                    setTimeout(() => {
-                        butterfly.style.transform = '';
-                    }, 200);
-
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'butterfly_click', {
-                            'event_category': 'engagement',
-                            'event_label': color.name,
-                            'interaction_type': event.type,
-                            'screen_x': event.clientX,
-                            'screen_y': event.clientY,
-                            'butterfly_size': size,
-                            'message_shown': messages[Math.floor(Math.random() * messages.length)].substring(0, 20)
-                        });
-                    }
-                };
-
-                butterfly.addEventListener('click', trackButterflyClick);
-                butterfly.addEventListener('touchstart', function(e) {
-                    e.preventDefault();
-                    trackButterflyClick(e);
-                });
-=======
                 if (!isFinalState) {
                     const trackButterflyClick = (event) => {
                         showRandomMessage(messageBubble);
@@ -886,7 +801,6 @@
                         trackButterflyClick(e);
                     });
                 }
->>>>>>> abe33f7 (Last)
 
                 function animateButterfly() {
                     if (!shouldAnimate) return;
