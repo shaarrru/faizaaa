@@ -23,6 +23,7 @@
         gtag('config', 'G-PTB0GN08KR');
     </script>
 
+
     <style>
         body {
             display: flex;
@@ -110,7 +111,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            z-index: 200;
             opacity: 0;
             pointer-events: none;
             transition: opacity 3s ease;
@@ -437,6 +438,21 @@
                 font-size: 2em;
             }
         }
+        
+        .final-butterfly {
+            position: fixed;
+            z-index: 10;
+            pointer-events: none;
+            width: 50px;
+            height: 50px;
+        }
+        
+        .landing-spot-active {
+            background-color: rgba(202, 117, 114, 0.3);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(202, 117, 114, 0.5);
+            transition: all 0.5s ease;
+        }
     </style>
 </head>
 
@@ -454,6 +470,8 @@
         <h1 class="final-title">آسف</h1>
         <div class="final-flower">
             <img class="final-image" src="Flower/IMG_4978.jpeg" alt="Our Love" />
+            <div id="landing-spot-1" style="position: absolute; width: 17px; height: 18px; top: 8%; left: 55%; transform: translate(-50%, -50%); pointer-events: none;"></div>
+            <div id="landing-spot-2" style="position: absolute; width: 17px; height: 18px; top: 12%; left: 22%; transform: translate(-50%, -50%); pointer-events: none;"></div>
         </div>
     </div>
 
@@ -498,7 +516,7 @@
                 "You're\nHOPE!",
                 "You're\nPoetry",
                 "You're\nHome!",
-                "You're\nStardust",
+                "i've never loved\none like you!",
                 "You're my\nSukooon!",
                 "You're quite\nA dream!",
                 "Keep your\nSoul safe!",
@@ -520,7 +538,7 @@
                 "Remember?\nthose verses?",
                 "Where are\nthose trolls?",
                 "Can we talk?",
-                "I lost my\neverything",              
+                "I lost my\neverything",
                 "One last\nChance?",
                 "Damn you're\nmy Nooor!",
                 "Want to fight\nfor my Love",
@@ -573,23 +591,6 @@
                 }
             }
 
-            function createFinalElements() {
-                for (let i = 0; i < numFireflies; i++) {
-                    setTimeout(() => {
-                        createFirefly(true);
-                        if (i === numFireflies - 2) {
-                            setInterval(() => createFirefly(true), 1200);
-                        }
-                    }, i * 150);
-                }
-
-                for (let i = 0; i < 10; i++) {
-                    setTimeout(() => {
-                        createButterfly(false, true);
-                    }, i * 1000);
-                }
-            }
-
             document.addEventListener('keydown', function(event) {
                 if (event.code === 'Space' || event.code === 'Enter') {
                     if (activeButterflies.length > 0) {
@@ -627,7 +628,7 @@
                     createButterflyExplosion();
                 }
 
-                if (score === 50) {
+                if (score === 30) {
                     activateFinalState();
                 }
             }
@@ -640,83 +641,324 @@
 
                 const finalState = document.getElementById('final-state');
                 finalState.classList.remove('hidden');
+
                 setTimeout(() => {
                     finalState.classList.add('visible');
 
-                    createFinalElements();
+                    const checkImageLoaded = setInterval(() => {
+                        const img = document.querySelector('.final-image');
+                        if (img.complete && img.naturalHeight !== 0) {
+                            clearInterval(checkImageLoaded);
+                            setTimeout(() => {
+                                createFinalButterflies();
+                            }, 300);
+                        }
+                    }, 100);
                 }, 100);
+            }
 
-                document.querySelectorAll('.butterfly_wrapper').forEach(el => {
-                    el.onclick = null;
-                    el.ontouchstart = null;
+            function createFinalButterflies() {
+                createLandingButterfly();
+
+                setTimeout(() => {
+                    for (let i = 0; i < 3; i++) {
+                        createDecorativeButterfly();
+                    }
+                }, 2500);
+            }
+
+            function cubicBezier(p0, p1, p2, p3, t) {
+                const mt = 1 - t;
+                return mt * mt * mt * p0 + 3 * mt * mt * t * p1 + 3 * mt * t * t * p2 + t * t * t * p3;
+            }
+
+            function easeOutQuad(t) {
+                return t * (2 - t);
+            }
+
+
+            function createLandingButterfly() {
+                const spotNumber = Math.random() > 0.5 ? 1 : 2;
+                const landingSpot = document.getElementById(`landing-spot-${spotNumber}`);
+
+                landingSpot.classList.add('landing-spot-active');
+
+                const butterfly = document.createElement('div');
+                butterfly.className = 'butterfly_wrapper final-butterfly landing-butterfly';
+                butterfly.style.cssText = `
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+        position: absolute;
+        z-index: 300;
+    `;
+
+                butterfly.innerHTML = `
+        <div class="leftwings">
+            <div class="perspective">
+                <div class="upperwing upperwing_left"></div>
+            </div>
+            <div class="perspective">
+                <div class="lowerwing lowerwing_left"></div>
+            </div>
+        </div>
+        <div class="rightwings">
+            <div class="perspective">
+                <div class="upperwing upperwing_right"></div>
+            </div>
+            <div class="perspective">
+                <div class="lowerwing lowerwing_right"></div>
+            </div>
+        </div>
+    `;
+
+                const wings = butterfly.querySelectorAll('.upperwing, .lowerwing');
+                wings.forEach(wing => {
+                    wing.style.background = "radial-gradient(ellipse at center, #9D4EDD 0%, #E0AAFF 50%, #9D4EDD 100%)";
                 });
+
+                document.getElementById('final-state').appendChild(butterfly);
+
+                setTimeout(() => {
+                    butterfly.animate([{
+                        opacity: 0
+                    }, {
+                        opacity: 1
+                    }], {
+                        duration: 1000,
+                        fill: 'forwards'
+                    });
+
+                    const startX = -100;
+                    const startY = window.innerHeight * 0.3;
+                    butterfly.style.left = `${startX}px`;
+                    butterfly.style.top = `${startY}px`;
+
+                    const landingRect = landingSpot.getBoundingClientRect();
+                    const targetX = landingRect.left + landingRect.width / 2;
+                    const targetY = landingRect.top + landingRect.height / 2;
+
+                    const controlX1 = window.innerWidth * 0.3;
+                    const controlY1 = window.innerHeight * 0.2;
+                    const controlX2 = window.innerWidth * 0.6;
+                    const controlY2 = window.innerHeight * 0.4;
+
+                    const flightDuration = 4000;
+                    const startTime = performance.now();
+
+                    function animateFlight(currentTime) {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / flightDuration, 1);
+
+                        const x = cubicBezier(startX, controlX1, controlX2, targetX, progress);
+                        const y = cubicBezier(startY, controlY1, controlY2, targetY, progress);
+
+                        butterfly.style.left = `${x}px`;
+                        butterfly.style.top = `${y}px`;
+                        butterfly.style.width = `${80 - (40 * progress)}px`;
+                        butterfly.style.height = `${80 - (40 * progress)}px`;
+
+                        const wingSpeed = 0.3 - (0.2 * progress);
+                        wings.forEach(wing => {
+                            wing.style.animationDuration = `${wingSpeed}s`;
+                        });
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animateFlight);
+                        } else {
+                            startPausePlayLoop();
+                        }
+                    }
+
+                    function showFullWings() {
+                        wings.forEach(wing => {
+                            if (wing.classList.contains('upperwing_right') ||
+                                wing.classList.contains('lowerwing_right')) {
+                                wing.style.transform = 'rotateY(0deg)';
+                            } else {
+                                wing.style.transform = 'rotateY(0deg)';
+                            }
+                            wing.style.animation = 'none';
+                        });
+                    }
+
+                    function startFastFlapping() {
+                        wings.forEach(wing => {
+                            wing.style.transform = '';
+                            if (wing.classList.contains('upperwing_right') ||
+                                wing.classList.contains('lowerwing_right')) {
+                                wing.style.animation = 'movewing_right 0.1s infinite alternate';
+                            } else {
+                                wing.style.animation = 'movewing_left 0.1s infinite alternate';
+                            }
+                        });
+                    }
+
+                    function startPausePlayLoop() {
+                        showFullWings();
+
+                        setTimeout(() => {
+                            startFastFlapping();
+
+                            setTimeout(() => {
+                                showFullWings();
+
+                                setTimeout(() => {
+                                    startFastFlapping();
+
+                                    startPausePlayLoop();
+                                }, 1000);
+                            }, 2000);
+                        }, 1000);
+                    }
+
+                    requestAnimationFrame(animateFlight);
+
+                    setTimeout(() => {
+                        landingSpot.classList.remove('landing-spot-active');
+                    }, flightDuration);
+
+                }, 300);
+            }
+
+            function createDecorativeButterfly() {
+                const butterfly = document.createElement('div');
+                butterfly.className = 'butterfly_wrapper final-butterfly';
+
+                const size = 40 + Math.random() * 40;
+                butterfly.style.width = `${size}px`;
+                butterfly.style.height = `${size}px`;
+
+                butterfly.innerHTML = `
+                    <div class="leftwings">
+                        <div class="perspective">
+                            <div class="upperwing upperwing_left"></div>
+                        </div>
+                        <div class="perspective">
+                            <div class="lowerwing lowerwing_left"></div>
+                        </div>
+                    </div>
+                    <div class="rightwings">
+                        <div class="perspective">
+                            <div class="upperwing upperwing_right"></div>
+                        </div>
+                        <div class="perspective">
+                            <div class="lowerwing lowerwing_right"></div>
+                        </div>
+                    </div>
+                `;
+
+                const color = butterflyColors[Math.floor(Math.random() * butterflyColors.length)];
+
+                const wings = butterfly.querySelectorAll('.upperwing, .lowerwing');
+                wings.forEach(wing => {
+                    wing.style.animation = wing.classList.contains('upperwing_right') ||
+                        wing.classList.contains('lowerwing_right') ?
+                        'movewing_right 0.3s infinite alternate' :
+                        'movewing_left 0.3s infinite alternate';
+                });
+
+                const startX = Math.random() * window.innerWidth;
+                const startY = Math.random() * window.innerHeight;
+                butterfly.style.left = `${startX}px`;
+                butterfly.style.top = `${startY}px`;
+                butterfly.style.zIndex = '10';
+
+                document.body.appendChild(butterfly);
+
+                let angle = 0;
+                let floatDirection = 1;
+
+                function floatAnimation() {
+                    angle += 0.01 * floatDirection;
+                    if (Math.abs(angle) > 0.1) floatDirection *= -1;
+
+                    const offsetY = Math.sin(performance.now() / 1000) * 20;
+                    const offsetX = Math.cos(performance.now() / 1200) * 10;
+
+                    butterfly.style.transform = `translate(${offsetX}px, ${offsetY}px) rotate(${angle}deg)`;
+
+                    requestAnimationFrame(floatAnimation);
+                }
+
+                floatAnimation();
             }
 
             function createButterflyExplosion() {
-                for (let i = 0; i < 50; i++) {
+                activeButterflies.forEach(butterfly => {
+                    const angle = Math.random() * Math.PI * 2;
+                    const speed = 3 + Math.random() * 7;
+                    butterfly.dataset.velocityX = Math.cos(angle) * speed;
+                    butterfly.dataset.velocityY = Math.sin(angle) * speed;
+                    butterfly.dataset.rotationSpeed = (Math.random() - 0.5) * 25;
+                    butterfly.dataset.currentRotation = 0;
+
+                    const wings = butterfly.querySelectorAll('.upperwing, .lowerwing');
+                    wings.forEach(wing => {
+                        wing.style.animationDuration = '0.1s';
+                    });
+
+                    animateExplodingButterfly(butterfly);
+                });
+
+                for (let i = 0; i < 100; i++) {
                     setTimeout(() => {
                         const explosionButterfly = document.createElement('div');
                         explosionButterfly.className = 'butterfly_wrapper explosion-butterfly';
+                        explosionButterfly.style.position = 'absolute';
+                        explosionButterfly.style.zIndex = '1000';
 
                         explosionButterfly.innerHTML = `
-                            <div class="leftwings">
-                                <div class="perspective">
-                                    <div class="upperwing upperwing_left"></div>
-                                </div>
-                                <div class="perspective">
-                                    <div class="lowerwing lowerwing_left"></div>
-                                </div>
-                            </div>
-                            <div class="rightwings">
-                                <div class="perspective">
-                                    <div class="upperwing upperwing_right"></div>
-                                </div>
-                                <div class="perspective">
-                                    <div class="lowerwing lowerwing_right"></div>
-                                </div>
-                            </div>
-                        `;
+                <div class="leftwings">
+                    <div class="perspective">
+                        <div class="upperwing upperwing_left"></div>
+                    </div>
+                    <div class="perspective">
+                        <div class="lowerwing lowerwing_left"></div>
+                    </div>
+                </div>
+                <div class="rightwings">
+                    <div class="perspective">
+                        <div class="upperwing upperwing_right"></div>
+                    </div>
+                    <div class="perspective">
+                        <div class="lowerwing lowerwing_right"></div>
+                    </div>
+                </div>
+            `;
 
                         const posX = Math.random() * window.innerWidth;
                         const posY = Math.random() * window.innerHeight;
 
                         explosionButterfly.style.left = `${posX}px`;
                         explosionButterfly.style.top = `${posY}px`;
-                        explosionButterfly.style.width = '40px';
-                        explosionButterfly.style.height = '40px';
+
+                        const size = 20 + Math.random() * 30;
+                        explosionButterfly.style.width = `${size}px`;
+                        explosionButterfly.style.height = `${size}px`;
 
                         const color = butterflyColors[Math.floor(Math.random() * butterflyColors.length)];
                         const wings = explosionButterfly.querySelectorAll('.upperwing, .lowerwing');
                         wings.forEach(wing => {
                             wing.style.background = color.gradient;
+                            wing.style.animationDuration = '0.1s';
                         });
 
                         document.body.appendChild(explosionButterfly);
 
-                        setTimeout(() => {
-                            explosionButterfly.remove();
-                        }, 800);
+                        const angle = Math.random() * Math.PI * 2;
+                        const speed = 1 + Math.random() * 4;
+                        explosionButterfly.dataset.velocityX = Math.cos(angle) * speed;
+                        explosionButterfly.dataset.velocityY = Math.sin(angle) * speed;
+                        explosionButterfly.dataset.rotationSpeed = (Math.random() - 0.5) * 20;
+                        explosionButterfly.dataset.currentRotation = 0;
+                        explosionButterfly.dataset.life = 200 + Math.random() * 200;
+                        explosionButterfly.dataset.startTime = Date.now();
 
-                    }, i * 20);
+                        animateExplosionParticle(explosionButterfly);
+
+                    }, i * 10);
                 }
-
-                activeButterflies.forEach(butterfly => {
-                    butterfly.animate([{
-                        transform: 'rotate(0deg) scale(1)',
-                        opacity: 1
-                    }, {
-                        transform: 'rotate(360deg) scale(0)',
-                        opacity: 0
-                    }], {
-                        duration: 600,
-                        easing: 'ease-in',
-                        fill: 'forwards'
-                    });
-
-                    setTimeout(() => {
-                        butterfly.remove();
-                    }, 600);
-                });
 
                 activeButterflies = [];
 
@@ -726,7 +968,68 @@
                             createButterfly();
                         }, i * 300);
                     }
-                }, 1000);
+                }, 1500);
+            }
+
+            function animateExplodingButterfly(butterfly) {
+                if (!butterfly.isConnected) return;
+
+                let x = parseFloat(butterfly.style.left);
+                let y = parseFloat(butterfly.style.top);
+
+                x += parseFloat(butterfly.dataset.velocityX);
+                y += parseFloat(butterfly.dataset.velocityY);
+
+                butterfly.dataset.currentRotation = parseFloat(butterfly.dataset.currentRotation) +
+                    parseFloat(butterfly.dataset.rotationSpeed);
+
+                butterfly.style.left = `${x}px`;
+                butterfly.style.top = `${y}px`;
+                butterfly.style.transform = `rotate(${butterfly.dataset.currentRotation}deg)`;
+
+                butterfly.style.opacity = parseFloat(butterfly.style.opacity) - 0.002;
+
+                if (parseFloat(butterfly.style.opacity) > 0) {
+                    requestAnimationFrame(() => animateExplodingButterfly(butterfly));
+                } else {
+                    butterfly.remove();
+                }
+            }
+
+            function animateExplosionParticle(particle) {
+                if (!particle.isConnected) return;
+
+                const lifeProgress = (Date.now() - particle.dataset.startTime) / particle.dataset.life;
+
+                let x = parseFloat(particle.style.left);
+                let y = parseFloat(particle.style.top);
+
+                x += parseFloat(particle.dataset.velocityX);
+                y += parseFloat(particle.dataset.velocityY);
+
+                particle.dataset.velocityX *= 0.98;
+                particle.dataset.velocityY *= 0.98;
+
+                particle.dataset.currentRotation = parseFloat(particle.dataset.currentRotation) +
+                    parseFloat(particle.dataset.rotationSpeed);
+
+                particle.style.transform = `rotate(${particle.dataset.currentRotation}deg) scale(${1 - (lifeProgress * 0.3)})`;
+
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+
+                particle.style.opacity = 1 - lifeProgress;
+
+                if (Math.random() > 0.95) {
+                    particle.dataset.velocityX += (Math.random() - 0.5) * 3;
+                    particle.dataset.velocityY += (Math.random() - 0.5) * 3;
+                }
+
+                if (lifeProgress < 1) {
+                    requestAnimationFrame(() => animateExplosionParticle(particle));
+                } else {
+                    particle.remove();
+                }
             }
 
             function createButterfly(isFirstButterfly = false, isFinalState = false) {
