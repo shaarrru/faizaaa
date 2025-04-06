@@ -23,7 +23,6 @@
         gtag('config', 'G-PTB0GN08KR');
     </script>
 
-
     <style>
         body {
             display: flex;
@@ -442,7 +441,6 @@
         .final-butterfly {
             position: fixed;
             z-index: 10;
-            pointer-events: none;
             width: 50px;
             height: 50px;
         }
@@ -453,6 +451,37 @@
             box-shadow: 0 0 10px rgba(202, 117, 114, 0.5);
             transition: all 0.5s ease;
         }
+        
+        .final-butterfly.landing {
+            pointer-events: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .final-butterfly.landing:active {
+            transform: scale(0.9);
+        }
+        
+        .stay-message {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(241, 186, 186, 0.85);
+            color: #3d3c3c;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 350;
+        }
+        
+        .stay-message.visible {
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -462,7 +491,7 @@
         <img class="imagen" src="Flower/IMG_4925.jpg" alt="Girasoles" />
     </div>
     <div class="score-container">
-        <div class="gotcha-title">Butterflies Gotcha!</div>
+        <div class="gotcha-title">Butterflies<br>Gotcha!</div>
         <span class="score-value">0</span>
     </div>
 
@@ -496,7 +525,6 @@
                 "You're my\n<span class='yellow-word'>YELLOW</span>",
                 "You're my\n<span class='yellow-word'>YELLOW</span>",
                 "JAADUU✨",
-                "Eijee ektuu\nkotha bolben?",
                 "Hubun!❤️",
                 "Innocently\nIntimidating",
                 "You're more than\n all these flower!",
@@ -516,17 +544,16 @@
                 "You're\nHOPE!",
                 "You're\nPoetry",
                 "You're\nHome!",
-                "i've never loved\none like you!",
+                "Girl, I never\nloved one like you",
                 "You're my\nSukooon!",
                 "You're quite\nA dream!",
-                "Keep your\nSoul safe!",
-                "I'm hell\nObsessed\nwith you!",
-                "Are you never\ngonna love me?",
+                "I'll stand\nby your side!",
+                "I'm hell\nobsessed\nwith you!",
                 "Save Me\nplease!",
                 "You're my\nBarakah!",
                 "You're my\nBarakah!",
                 "You're my\nDuniyaa!",
-                "There is no one\nlike Bushraa!",
+                "There is noone\nlike Bushraa!",
                 "You're so\nPrecious!",
                 "Maaf koree\ndewnah Bhai!",
                 "You're my\nSimple Thing",
@@ -538,8 +565,6 @@
                 "Remember?\nthose verses?",
                 "Where are\nthose trolls?",
                 "Can we talk?",
-                "I lost my\neverything",
-                "One last\nChance?",
                 "Damn you're\nmy Nooor!",
                 "Want to fight\nfor my Love",
                 "Me paused\nwithout you!",
@@ -551,7 +576,7 @@
                 "You're my\nAudacity!",
                 "Can we sail\none last time?",
                 "You're my\nTahajjud!",
-                "NO therapy can\nfiled the void!",
+                "La di da di daaaa",
                 "You're my\nTahajjud!",
                 "You're my\nTahajjud!",
                 "You're all over\nmy prayers!"
@@ -678,46 +703,135 @@
 
 
             function createLandingButterfly() {
-                const spotNumber = Math.random() > 0.5 ? 1 : 2;
-                const landingSpot = document.getElementById(`landing-spot-${spotNumber}`);
+                const landingSpots = [
+                    document.getElementById('landing-spot-1'),
+                    document.getElementById('landing-spot-2')
+                ];
 
+                let currentSpotIndex = Math.floor(Math.random() * landingSpots.length);
+                const landingSpot = landingSpots[currentSpotIndex];
                 landingSpot.classList.add('landing-spot-active');
 
                 const butterfly = document.createElement('div');
-                butterfly.className = 'butterfly_wrapper final-butterfly landing-butterfly';
+                butterfly.className = 'butterfly_wrapper final-butterfly landing';
                 butterfly.style.cssText = `
-        width: 80px;
-        height: 80px;
-        opacity: 0;
-        position: absolute;
-        z-index: 300;
+                 width: 50px;
+                  height: 50px;
+                    opacity: 0;
+                    position: absolute;
+                       z-index: 300;
+                   touch-action: manipulation;
     `;
 
                 butterfly.innerHTML = `
-        <div class="leftwings">
-            <div class="perspective">
+              <div class="leftwings">
+              <div class="perspective">
                 <div class="upperwing upperwing_left"></div>
-            </div>
-            <div class="perspective">
+              </div>
+              <div class="perspective">
                 <div class="lowerwing lowerwing_left"></div>
-            </div>
-        </div>
-        <div class="rightwings">
-            <div class="perspective">
+              </div>
+              </div>
+              <div class="rightwings">
+              <div class="perspective">
                 <div class="upperwing upperwing_right"></div>
-            </div>
-            <div class="perspective">
+              </div>
+              <div class="perspective">
                 <div class="lowerwing lowerwing_right"></div>
-            </div>
-        </div>
+              </div>
+              </div>
+             <div class="stay-message">I'm here to stay!</div>
     `;
 
                 const wings = butterfly.querySelectorAll('.upperwing, .lowerwing');
                 wings.forEach(wing => {
-                    wing.style.background = "radial-gradient(ellipse at center, #9D4EDD 0%, #E0AAFF 50%, #9D4EDD 100%)";
+                    wing.style.background = "radial-gradient(ellipse at center, #9D4EDD 0%, #E0AAFF 50%, #94D4ED 100%)";
                 });
 
                 document.getElementById('final-state').appendChild(butterfly);
+
+                const flyToNewSpot = () => {
+                    const message = butterfly.querySelector('.stay-message');
+                    message.classList.remove('visible');
+
+                    landingSpots[currentSpotIndex].classList.remove('landing-spot-active');
+
+                    let newSpotIndex;
+                    do {
+                        newSpotIndex = Math.floor(Math.random() * landingSpots.length);
+                    } while (newSpotIndex === currentSpotIndex);
+
+                    currentSpotIndex = newSpotIndex;
+                    const newSpot = landingSpots[currentSpotIndex];
+                    newSpot.classList.add('landing-spot-active');
+
+                    const startX = parseFloat(butterfly.style.left);
+                    const startY = parseFloat(butterfly.style.top);
+                    const spotRect = newSpot.getBoundingClientRect();
+                    const targetX = spotRect.left + spotRect.width / 2;
+                    const targetY = spotRect.top + spotRect.height / 2;
+
+                    wings.forEach(wing => {
+                        wing.style.animationDuration = '0.1s';
+                    });
+
+                    const duration = 3200;
+                    const startTime = performance.now();
+
+                    const controlPoints = [{
+                        x: startX + (targetX - startX) * 0.2,
+                        y: startY - 80
+                    }, {
+                        x: startX + (targetX - startX) * 0.5,
+                        y: startY - 120
+                    }, {
+                        x: startX + (targetX - startX) * 0.8,
+                        y: targetY - 60
+                    }];
+
+                    const animateFlight = (currentTime) => {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const easeProgress = easeInOutQuad(progress);
+
+                        const x = cubicBezier(startX, controlPoints[0].x, controlPoints[1].x, targetX, easeProgress);
+                        const y = cubicBezier(startY, controlPoints[0].y, controlPoints[1].y, targetY, easeProgress);
+
+                        const nextX = cubicBezier(startX, controlPoints[0].x, controlPoints[1].x, targetX, Math.min(progress + 0.05, 1));
+                        const nextY = cubicBezier(startY, controlPoints[0].y, controlPoints[1].y, targetY, Math.min(progress + 0.05, 1));
+                        const angle = Math.atan2(nextY - y, nextX - x) * (180 / Math.PI);
+
+                        butterfly.style.left = `${x}px`;
+                        butterfly.style.top = `${y}px`;
+                        butterfly.style.transform = `rotate(${angle}deg)`;
+
+                        const scale = 0.9 + 0.1 * Math.sin(progress * Math.PI);
+                        butterfly.style.transform = `rotate(${angle}deg) scale(${scale})`;
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animateFlight);
+                        } else {
+                            wings.forEach(wing => {
+                                wing.style.animationDuration = '0.3s';
+                            });
+
+                            butterfly.style.transform = 'rotate(0deg) scale(1)';
+
+                            setTimeout(() => {
+                                message.classList.add('visible');
+                                setTimeout(() => {
+                                    message.classList.remove('visible');
+                                }, 2000);
+                            }, 500);
+                        }
+                    };
+
+                    requestAnimationFrame(animateFlight);
+                };
+
+                function easeInOutQuad(t) {
+                    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+                }
 
                 setTimeout(() => {
                     butterfly.animate([{
@@ -738,10 +852,16 @@
                     const targetX = landingRect.left + landingRect.width / 2;
                     const targetY = landingRect.top + landingRect.height / 2;
 
-                    const controlX1 = window.innerWidth * 0.3;
-                    const controlY1 = window.innerHeight * 0.2;
-                    const controlX2 = window.innerWidth * 0.6;
-                    const controlY2 = window.innerHeight * 0.4;
+                    const controlPoints = [{
+                        x: window.innerWidth * 0.2,
+                        y: window.innerHeight * 0.1
+                    }, {
+                        x: window.innerWidth * 0.5,
+                        y: window.innerHeight * 0.2
+                    }, {
+                        x: window.innerWidth * 0.7,
+                        y: window.innerHeight * 0.3
+                    }];
 
                     const flightDuration = 4000;
                     const startTime = performance.now();
@@ -749,16 +869,23 @@
                     function animateFlight(currentTime) {
                         const elapsed = currentTime - startTime;
                         const progress = Math.min(elapsed / flightDuration, 1);
+                        const easeProgress = easeInOutQuad(progress);
 
-                        const x = cubicBezier(startX, controlX1, controlX2, targetX, progress);
-                        const y = cubicBezier(startY, controlY1, controlY2, targetY, progress);
+                        const x = cubicBezier(startX, controlPoints[0].x, controlPoints[1].x, targetX, easeProgress);
+                        const y = cubicBezier(startY, controlPoints[0].y, controlPoints[1].y, targetY, easeProgress);
+
+                        const nextX = cubicBezier(startX, controlPoints[0].x, controlPoints[1].x, targetX, Math.min(progress + 0.05, 1));
+                        const nextY = cubicBezier(startY, controlPoints[0].y, controlPoints[1].y, targetY, Math.min(progress + 0.05, 1));
+                        const angle = Math.atan2(nextY - y, nextX - x) * (180 / Math.PI);
 
                         butterfly.style.left = `${x}px`;
                         butterfly.style.top = `${y}px`;
-                        butterfly.style.width = `${80 - (40 * progress)}px`;
-                        butterfly.style.height = `${80 - (40 * progress)}px`;
+                        butterfly.style.transform = `rotate(${angle}deg)`;
 
-                        const wingSpeed = 0.3 - (0.2 * progress);
+                        const scale = 0.8 + 0.2 * Math.sin(progress * Math.PI);
+                        butterfly.style.transform = `rotate(${angle}deg) scale(${scale})`;
+
+                        const wingSpeed = 0.2 + 0.1 * Math.sin(progress * Math.PI * 2);
                         wings.forEach(wing => {
                             wing.style.animationDuration = `${wingSpeed}s`;
                         });
@@ -767,29 +894,31 @@
                             requestAnimationFrame(animateFlight);
                         } else {
                             startPausePlayLoop();
+
+                            butterfly.addEventListener('click', flyToNewSpot);
+                            butterfly.addEventListener('touchstart', function(e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                flyToNewSpot();
+                            });
+
                         }
                     }
 
                     function showFullWings() {
                         wings.forEach(wing => {
-                            if (wing.classList.contains('upperwing_right') ||
-                                wing.classList.contains('lowerwing_right')) {
-                                wing.style.transform = 'rotateY(0deg)';
-                            } else {
-                                wing.style.transform = 'rotateY(0deg)';
-                            }
+                            wing.style.transform = 'rotateY(0deg)';
                             wing.style.animation = 'none';
                         });
                     }
 
                     function startFastFlapping() {
                         wings.forEach(wing => {
-                            wing.style.transform = '';
                             if (wing.classList.contains('upperwing_right') ||
                                 wing.classList.contains('lowerwing_right')) {
-                                wing.style.animation = 'movewing_right 0.1s infinite alternate';
+                                wing.style.animation = 'movewing_right 0.15s infinite alternate';
                             } else {
-                                wing.style.animation = 'movewing_left 0.1s infinite alternate';
+                                wing.style.animation = 'movewing_left 0.15s infinite alternate';
                             }
                         });
                     }
@@ -1102,8 +1231,8 @@
                 if (isFirstButterfly) {
                     setTimeout(() => {
                         const firstMessages = [
-                            "Babukhalamonii\nTap! Tap! Tap!",
-                            "Babukhalamoooniii\nFind words if u can!"
+                            "Babukhalamoni\nTap! Tap! Tap!",
+                            "Babukhalamoniii\nCatch butterflies"
                         ];
 
                         const randomFirstMessage = firstMessages[Math.floor(Math.random() * firstMessages.length)];
