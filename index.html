@@ -943,11 +943,33 @@
                         } else {
                             startPausePlayLoop();
 
-                            butterfly.addEventListener('click', flyToNewSpot);
+                            butterfly.addEventListener('click', function(e) {
+                                flyToNewSpot();
+
+                                if (typeof gtag !== 'undefined') {
+                                    gtag('event', 'final_butterfly_click', {
+                                        'event_category': 'final_state',
+                                        'event_label': 'landing_butterfly',
+                                        'interaction_type': 'click',
+                                        'screen_x': e.clientX,
+                                        'screen_y': e.clientY
+                                    });
+                                }
+                            });
+
                             butterfly.addEventListener('touchstart', function(e) {
                                 e.preventDefault();
-                                e.stopPropagation();
                                 flyToNewSpot();
+
+                                if (typeof gtag !== 'undefined') {
+                                    gtag('event', 'final_butterfly_click', {
+                                        'event_category': 'final_state',
+                                        'event_label': 'landing_butterfly',
+                                        'interaction_type': 'touch',
+                                        'screen_x': e.touches[0].clientX,
+                                        'screen_y': e.touches[0].clientY
+                                    });
+                                }
                             });
                         }
                     }
